@@ -1,8 +1,9 @@
-import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import { Navigate, Outlet } from "react-router-dom";
 
 export default function MainLayout() {
+    const token = localStorage.getItem("token");
+    if (!token) return <Navigate to="/login" />;
+
     return (
         <div className="flex h-screen">
             <Sidebar />

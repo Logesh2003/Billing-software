@@ -34,6 +34,10 @@ app.get("/api/v1/protected", auth, (req, res) => {
     res.json({ message: "Protected data", user: req.user });
 });
 
+const productRoutes = require("./routes/products");
+app.use("/api/v1/products", productRoutes);
+
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

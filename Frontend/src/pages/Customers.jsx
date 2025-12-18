@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
 
-export default function Products() {
-    const [products, setProducts] = useState([]);
+export default function Customers() {
+    const [customers, setCustomers] = useState([]);
     const [form, setForm] = useState({
         name: "",
-        price: "",
-        stock: "",
-        tax: ""
+        phone: "",
+        email: "",
+        address: "",
+        gstNumber: ""
     });
     const [editId, setEditId] = useState(null);
     const token = localStorage.getItem("token");
 
-    const fetchProducts = async () => {
-        const res = await fetch("http://localhost:5000/api/v1/products", {
+    const fetchCustomers = async () => {
+        const res = await fetch("http://localhost:5000/api/v1/customers", {
             headers: { Authorization: `Bearer ${token}` }
         });
-        setProducts(await res.json());
+        setCustomers(await res.json());
     };
 
-    useEffect(() => { fetchProducts(); }, []);
+    useEffect(() => { fetchCustomers(); }, []);
 
     const submit = async (e) => {
         e.preventDefault();
         const url = editId
-            ? `http://localhost:5000/api/v1/products/${editId}`
-            : "http://localhost:5000/api/v1/products";
+            ? `http://localhost:5000/api/v1/customers/${editId}`
+            : "http://localhost:5000/api/v1/customers";
 
         await fetch(url, {
             method: editId ? "PUT" : "POST",
@@ -35,111 +36,114 @@ export default function Products() {
             body: JSON.stringify(form)
         });
 
-        setForm({ name: "", price: "", stock: "", tax: "" });
+        setForm({ name: "", phone: "", email: "", address: "", gstNumber: "" });
         setEditId(null);
-        fetchProducts();
+        fetchCustomers();
     };
 
-    const editProduct = (p) => {
+    const editCustomer = (c) => {
         setForm({
-            name: p.name,
-            price: p.price,
-            stock: p.stock,
-            tax: p.tax
+            name: c.name,
+            phone: c.phone,
+            email: c.email,
+            address: c.address,
+            gstNumber: c.gstNumber
         });
-        setEditId(p._id);
+        setEditId(c._id);
     };
 
-    const deleteProduct = async (id) => {
-        if (confirm("Delete this product?")) {
-            await fetch(`http://localhost:5000/api/v1/products/${id}`, {
+    const deleteCustomer = async (id) => {
+        if (confirm("Delete this customer?")) {
+            await fetch(`http://localhost:5000/api/v1/customers/${id}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }
             });
-            fetchProducts();
+            fetchCustomers();
         }
     };
 
     return (
         <div className="space-y-8">
             {/* Page Title */}
-            <h2 className="text-2xl font-bold">Products</h2>
+            <h2 className="text-2xl font-bold">Customers</h2>
 
             {/* Form Card */}
             <div className="bg-white rounded-xl shadow p-6">
                 <h3 className="font-semibold mb-4">
-                    {editId ? "Edit Product" : "Add New Product"}
+                    {editId ? "Edit Customer" : "Add New Customer"}
                 </h3>
 
                 <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                         className="border p-2 rounded"
-                        placeholder="Product Name"
+                        placeholder="Customer Name"
                         value={form.name}
                         onChange={e => setForm({ ...form, name: e.target.value })}
                         required
                     />
                     <input
-                        type="number"
                         className="border p-2 rounded"
-                        placeholder="Price"
-                        value={form.price}
-                        onChange={e => setForm({ ...form, price: e.target.value })}
+                        placeholder="Phone Number"
+                        value={form.phone}
+                        onChange={e => setForm({ ...form, phone: e.target.value })}
                         required
                     />
                     <input
-                        type="number"
                         className="border p-2 rounded"
-                        placeholder="Stock Quantity"
-                        value={form.stock}
-                        onChange={e => setForm({ ...form, stock: e.target.value })}
-                        required
+                        placeholder="Email"
+                        value={form.email}
+                        onChange={e => setForm({ ...form, email: e.target.value })}
                     />
                     <input
-                        type="number"
                         className="border p-2 rounded"
-                        placeholder="Tax %"
-                        value={form.tax}
-                        onChange={e => setForm({ ...form, tax: e.target.value })}
+                        placeholder="GST Number (optional)"
+                        value={form.gstNumber}
+                        onChange={e => setForm({ ...form, gstNumber: e.target.value })}
+                    />
+                    <textarea
+                        className="border p-2 rounded md:col-span-2"
+                        placeholder="Address"
+                        value={form.address}
+                        onChange={e => setForm({ ...form, address: e.target.value })}
                     />
 
                     <button className="bg-blue-600 text-white py-2 rounded md:col-span-2 hover:bg-blue-700">
-                        {editId ? "Update Product" : "Add Product"}
+                        {editId ? "Update Customer" : "Add Customer"}
                     </button>
                 </form>
             </div>
 
-            {/* Products Table */}
+            {/* Customers Table */}
             <div className="bg-white rounded-xl shadow p-6">
-                <h3 className="font-semibold mb-4">Product List</h3>
+                <h3 className="font-semibold mb-4">Customer List</h3>
 
                 <div className="overflow-x-auto">
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="bg-gray-100 text-left">
                                 <th className="p-2">Name</th>
-                                <th className="p-2">Price</th>
-                                <th className="p-2">Stock</th>
-                                <th className="p-2">Tax %</th>
+                                <th className="p-2">Phone</th>
+                                <th className="p-2">Email</th>
+                                <th className="p-2">GST</th>
                                 <th className="p-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {products.map(p => (
-                                <tr key={p._id} className="border-t hover:bg-gray-50">
-                                    <td className="p-2">{p.name}</td>
-                                    <td className="p-2">₹{p.price}</td>
-                                    <td className="p-2">{p.stock}</td>
-                                    <td className="p-2">{p.tax || 0}%</td>
+                            {customers.map(c => (
+                                <tr key={c._id} className="border-t hover:bg-gray-50">
+                                    <td className="p-2">{c.name}</td>
+                                    <td className="p-2">{c.phone}</td>
+                                    <td className="p-2">{c.email || "-"}</td>
+                                    <td className="p-2">{c.gstNumber || "-"}</td>
                                     <td className="p-2 space-x-2">
                                         <button
-                                            onClick={() => editProduct(p)}
+                                            onClick={() => editCustomer(c)}
                                             className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
                                         >
                                             Edit
                                         </button>
                                         <button
-                                            onClick={() => deleteProduct(p._id)}
+                                            onClick={() => deleteCustomer(c._id)}
                                             className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                                         >
                                             Delete
@@ -148,10 +152,10 @@ export default function Products() {
                                 </tr>
                             ))}
 
-                            {products.length === 0 && (
+                            {customers.length === 0 && (
                                 <tr>
                                     <td colSpan="5" className="text-center p-4 text-gray-500">
-                                        No products found
+                                        No customers found
                                     </td>
                                 </tr>
                             )}

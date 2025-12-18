@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
-// import Customers from "./pages/Customers";
+import Customers from "./pages/Customers";
 // import Billing from "./pages/Billing";
 // import Reports from "./pages/Reports";
 import Login from "./pages/Login";
@@ -34,8 +34,8 @@ function App() {
         <Route path="/" element={<MainLayout user={user} onLogout={handleLogout} />}>
           <Route index element={<Dashboard />} />
           <Route path="products" element={<Products />} />
-          {/* <Route path="customers" element={<Customers />} />
-          <Route path="billing" element={<Billing />} />
+          <Route path="customers" element={<Customers />} />
+          {/* <Route path="billing" element={<Billing />} />
           <Route path="reports" element={<Reports />} /> */}
         </Route>
       </Routes>

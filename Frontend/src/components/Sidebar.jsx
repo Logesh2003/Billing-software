@@ -9,6 +9,7 @@ export default function Sidebar() {
                 <Link to="/products" className="block hover:bg-blue-500 p-2 rounded">Products</Link>
                 <Link to="/customers" className="block hover:bg-blue-500 p-2 rounded">Customers</Link>
                 <Link to="/billing" className="block hover:bg-blue-500 p-2 rounded">Billing</Link>
+                <Link to="/invoices" className="block hover:bg-blue-500 p-2 rounded">Invoices</Link>
                 <Link to="/reports" className="block hover:bg-blue-500 p-2 rounded">Reports</Link>
             </nav>
         </div>

@@ -7,6 +7,8 @@ import Customers from "./pages/Customers";
 import Billing from "./pages/Billing";
 // import Reports from "./pages/Reports";
 import Login from "./pages/Login";
+import Invoices from "./pages/Invoices";
+import InvoiceDetails from "./pages/InvoiceDetails";
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem("userName") || null);
@@ -36,6 +38,8 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="customers" element={<Customers />} />
           <Route path="billing" element={<Billing />} />
+          <Route path="invoices" element={<Invoices />} />
+          <Route path="invoices/:id" element={<InvoiceDetails />} />
           {/* <Route path="reports" element={<Reports />} /> */}
         </Route>
       </Routes>

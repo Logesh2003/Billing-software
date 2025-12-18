@@ -41,6 +41,9 @@ app.use("/api/v1/products", productRoutes);
 const customerRoutes = require("./routes/customers");
 app.use("/api/v1/customers", customerRoutes);
 
+const invoiceRoutes = require("./routes/invoices");
+app.use("/api/v1/invoices", invoiceRoutes);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;

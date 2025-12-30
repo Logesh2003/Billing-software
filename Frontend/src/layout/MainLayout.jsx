@@ -8,13 +8,19 @@ export default function MainLayout({ user, onLogout }) {
 
     return (
         <div className="flex h-screen">
-            <Sidebar />
-            <div className="flex-1 bg-gray-100">
+            {/* Sidebar on the left with blue background */}
+            <div className="w-64 bg-blue-600">
+                <Sidebar />
+            </div>
+
+            {/* Main content area */}
+            <div className="flex-1 bg-gray-100 flex flex-col">
                 <Header user={user} onLogout={onLogout} />
-                <div className="p-4">
+                <div className="p-4 flex-1 overflow-auto">
                     <Outlet />
                 </div>
             </div>
         </div>
+
     );
 }

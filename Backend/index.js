@@ -45,9 +45,14 @@ const invoiceRoutes = require("./routes/invoices");
 app.use("/api/v1/invoices", invoiceRoutes);
 
 
+const reportRoutes = require("./routes/reports");
+app.use("/api/v1/reports", reportRoutes);
+
 const companyRoutes = require("./routes/company");
 app.use("/api/v1/company", companyRoutes);
 
+const dashboardRoutes = require("./routes/dashboard");
+app.use("/api/v1/dashboard", dashboardRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

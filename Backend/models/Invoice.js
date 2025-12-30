@@ -16,7 +16,8 @@ const invoiceSchema = new mongoose.Schema(
         ],
         subTotal: Number,
         taxTotal: Number,
-        grandTotal: Number
+        grandTotal: Number,
+        status: { type: String, enum: ["PENDING", "PAID"], default: "PENDING" }
     },
     { timestamps: true }
 );

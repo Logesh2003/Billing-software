@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Customers from "./pages/Customers";
 import Billing from "./pages/Billing";
-// import Reports from "./pages/Reports";
+import Reports from "./pages/Reports";
 import Login from "./pages/Login";
 import Invoices from "./pages/Invoices";
 import InvoiceDetails from "./pages/InvoiceDetails";
@@ -40,7 +40,7 @@ function App() {
           <Route path="billing" element={<Billing />} />
           <Route path="invoices" element={<Invoices />} />
           <Route path="invoices/:id" element={<InvoiceDetails />} />
-          {/* <Route path="reports" element={<Reports />} /> */}
+          <Route path="reports" element={<Reports />} />
         </Route>
       </Routes>
     </BrowserRouter>

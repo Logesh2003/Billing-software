@@ -5,21 +5,6 @@ const auth = require("../middleware/auth");
 const router = express.Router();
 
 
-async function getMonthlyReport(month, year) {
-    const start = new Date(year, month - 1, 1);
-    const end = new Date(year, month, 0, 23, 59, 59);
-
-    const invoices = await Invoice.find({
-        createdAt: { $gte: start, $lte: end }
-    }).populate("customer");
-
-    return invoices.map(inv => ({
-        invoiceNumber: inv.invoiceNumber,
-        customer: inv.customer.name,
-        total: inv.grandTotal
-    }));
-}
-
 /* Create Invoice */
 router.post("/", auth, async (req, res) => {
     const invoice = await Invoice.create(req.body);
@@ -71,5 +56,27 @@ router.get("/", auth, async (req, res) => {
     res.json(invoices);
 });
 
+router.post("/:id/pay", auth, async (req, res) => {
+    try {
+        const invoice = await Invoice.findById(req.params.id);
+
+        if (!invoice) {
+            return res.status(404).json({ message: "Invoice not found" });
+        }
+
+        if (invoice.status === "PAID") {
+            return res.status(400).json({ message: "Invoice is already paid" });
+        }
+
+        invoice.status = "PAID";
+        invoice.paidAt = new Date(); // optional: track payment date
+        await invoice.save();
+
+        res.status(200).json({ message: "Invoice paid successfully", invoice });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
 
 module.exports = router;
